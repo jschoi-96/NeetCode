@@ -1,0 +1,32 @@
+// Time Complexity: O(9^2)
+// Space: O(9^2)
+
+Hashmap이랑 Hashset을 사용할때의 차이를 구분해야 할 것 같다.
+
+이 문제에서는 board의 index만 관심 사항이므로 hashSet을 이용하여 가로, 세로, 그리고 3x3 케이스를 확인해 주었다.
+
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        
+        unordered_set <char> row [9];
+        unordered_set <char> col [9];
+        unordered_set <char> square [9];
+        
+        for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                if (board[i][j] == '.') continue;
+                
+                char val = board[i][j]; 
+                int idx = (i / 3) * 3 + j / 3; // index of 3 x 3 box
+                
+                if (row[i].count(val) || col[j].count(val) || square[idx].count(val)) return false;
+                row[i].insert(val);
+                col[j].insert(val);
+                square[idx].insert(val);
+            }
+        }
+        return true;
+        
+    }
+};
