@@ -1,0 +1,31 @@
+// time complexity: O(n)
+// memory: O(n)
+
+Tips for this question -> try to visualize
+1 2 3 4    100   200
+
+Check whether there is left or right element
+if there is no left element, it means that element is start point.
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        // vector sort -> O(NlogN)
+        unordered_set <int> set (nums.begin(), nums.end());
+        int longest = 0;
+        
+        for (auto n : set){
+            // check if its start of a sequence
+            if (!set.count(n-1)){
+                int length = 0;
+                
+                while (set.count(n + length)) {
+                    
+                    length++;
+                }
+                longest = max(length,longest);
+            }
+        }
+        return longest;
+    }
+};
