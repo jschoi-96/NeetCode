@@ -1,0 +1,21 @@
+// 거의 맞게 풀었는데 전체 edge case를 체크를 못해줘서 답 참고
+// "0P" 랑 "a." 답이 왜 다른지?
+
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        int n = s.size(), l = 0, r = n - 1;
+        while (l < r) {
+            while (l < r && !isalnum(s[l])) {
+                l++;
+            }
+            while (l < r && !isalnum(s[r])) {
+                r--;
+            }
+            if (tolower(s[l++]) != tolower(s[r--])) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
