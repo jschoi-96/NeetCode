@@ -1,0 +1,39 @@
+// time O(nlogn) (sorting) + O(n^2) (second loop)
+// space: O(1)
+
+이 문제의 핵심 포인트: 처음에 sort를 하고 기준점 하나를 잡은 다음에 투포인터 방식으로 풀이
+edge case -> 1. checking duplicates at res vector and 2. consecutive duplicate element
+
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        
+        vector<vector<int>> res;
+        
+        // [-1,0,1,2,-1,4] sort -> [-4,-1,-1,0,1,2]
+        sort (nums.begin() , nums.end());
+        
+        for(int i = 0; i < nums.size(); i++){
+            
+            if ( i > 0 && nums[i] == nums[i-1]) // checking if number duplicates
+                // [-1,0,1],[-1,0,1]] duplicates
+                continue;
+            
+            int sum = 0;
+            int l = i + 1, r = nums.size() - 1;
+            while (l < r){
+                sum = nums[i] + nums[l] + nums[r];
+                
+                if (sum < 0) l++;
+                else if (sum > 0) r--;
+                else{ // if sum == 0
+                    res.push_back({nums[i] , nums[l] , nums[r]});
+                    int left_duplicate = nums[l] , right_duplicate = nums[r];
+                    while (l < r && left_duplicate == nums[l]) l++; // [-3,-3 ...] move left pointer to right
+                    while (l < r && right_duplicate == nums[r]) r--; // [.. -1,-1] move right pointer to left
+                }
+            }
+        }
+        return res;
+    }
+};
