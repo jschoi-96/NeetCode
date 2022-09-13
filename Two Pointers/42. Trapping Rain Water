@@ -1,0 +1,30 @@
+// Time Complexity: O(n)
+// Memory: O(1)
+
+Key idea: Check whether min(L,R) - h[i] is positive, if so, add to the result
+
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        if (height.size() == 0) return 0;
+        
+        int l = 0, r = height.size() - 1;
+        int leftMax = height[l] , rightMax = height[r];
+        int res = 0;
+        
+        while (l < r){
+            if (leftMax < rightMax) {
+                l++;
+                leftMax = max(leftMax, height[l]);
+                res += leftMax - height[l];
+                // leftMax - height[l] won't be negative because of max calculation
+            }
+            else {
+                r--;
+                rightMax = max(rightMax , height[r]);
+                res += rightMax - height[r];
+            }
+        }
+        return res;
+    }
+};
