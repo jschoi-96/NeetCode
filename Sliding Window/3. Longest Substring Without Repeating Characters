@@ -1,0 +1,28 @@
+// Time Complexity: O(n)
+// Memory: O(n)
+
+Sliding window Technique
+
+Keep adding character to HastSet, until it finds duplicate. 
+If duplicate is found, move left pointer to right by 1 and erase the element where left pointer is pointing to.
+
+Valid Sodoku problem -> Not sliding technique problem but similar in terms of using hashSet
+
+class Solution{
+public:
+    int lengthOfLongestSubstring(string s) {
+        unordered_set <char> charSet;// set for substring
+        int l = 0;
+        int res = 0;
+        
+        for (int r = 0; r < s.size(); r++){
+            while (charSet.count(s[r])){
+                charSet.erase(s[l]);
+                l++;
+            }
+            charSet.insert(s[r]);
+            res = max(res, r - l + 1);
+        }
+        return res;
+    }
+};
