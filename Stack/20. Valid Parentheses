@@ -1,0 +1,28 @@
+// Time: O(n)
+// Space: O(n)
+
+My wrong approach: Tried to push Close brackets to the stack 
+
+class Solution {
+public:
+    bool isValid(string s) {
+        stack <char> validChar;
+        for(int i = 0; i < s.size(); i++){
+            if (s[i] == '(' || s[i] == '[' || s[i] == '{'){
+                validChar.push(s[i]);
+                
+            } // stack ( [ { 
+            else {
+                if (validChar.empty()) return false;
+                if (validChar.top() != '(' && s[i] == ')' ) return false;
+                if (validChar.top() != '[' && s[i] == ']' ) return false;
+                if (validChar.top() != '{' && s[i] == '}') return false;
+
+                validChar.pop();
+            }
+        }
+        
+        
+        return validChar.empty();
+    }
+};
