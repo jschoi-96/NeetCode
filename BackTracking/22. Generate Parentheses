@@ -1,0 +1,35 @@
+// Time: O(2^n)
+// Space: O(n)
+
+1. 스택 섹션에 소개되어 있지만 백트래킹 방법으로 구현하였다.
+2. 문제의 갈피를 잡지 못해서 답안지를 참고하였다.
+3. 백트래킹을 하기 위한 조건 --> 1. Open, Close Parenthesis의 횟수가 3이 되면 return, 그 전까지 계산. 
+                                2. Open < n일때, open의 카운트를 + 1 해주고, '('를 더해주고, open > close일떄는 close의 계산을 해준다.
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> result;
+        generate(n, 0, 0, "", result);
+        return result;
+            
+    }
+    
+private:
+    void generate(int n, int open, int close, string str, vector<string> &result){
+        if (n == open && n == close){
+            result.push_back(str);
+            return;
+        }
+        
+        if (open < n){ // if open parenthesis
+            generate(n , open + 1, close, str + '(' , result);
+        }
+        
+        if (open > close){
+            generate(n, open, close + 1, str + ')' , result);
+        }
+        
+    }
+    
+    
+};
